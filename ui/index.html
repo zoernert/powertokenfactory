@@ -46,7 +46,7 @@
       <div class="container" id="preview">	    
         <h1>About</h1>
         <p>Simple (Web)-UI to illustrate usage of PowerToken and PowerTokenFactory. PowerToken is a modified Token contract - complient to ERC-20 - to exchange Power (Electicity). PowerTokenFactory is a factory contract to create or retrieve PowerToken contracts for a specified delivery time.</p>
-        <p><a class="btn btn-primary btn-lg" href="https://blog.stromhaltig.de/search/powertokenfactory" role="button">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="http://blog.stromhaltig.de/dapp/powertokenfactory/ui/index.html" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
 	
@@ -62,7 +62,43 @@
         </div>
 	  </div>
       <hr>
-
+	  <h2>Usage Hints</h2>
+	  <h3>The Token Problem</h3>
+	  <div class="row">
+		  <div class="col-md-12" >
+			<p>
+				Tokens keep the same meaning - no metter if it is today or tomorrow. In other words if you have for example a Euro, Bitcoin or Dollar it represents something where a common sense of value exists. 
+			</p>
+			<p>
+				With electricity we might have something similar with Watt-Hours, but the main difference is that it could not be traded as a Watt-Hour today is different to a Watt-Hour tomorrow. Depending on production of renewable energy the value represented is different.
+			</p>
+			<p>
+				Looking at energy markets the product traded is not Watt-Hours. It is always Watt-Hours in a certain timeframe. That's why a standard token as described in <a href="https://github.com/ethereum/EIPs/issues/20">ERC 20</a> is not enough.
+			</p>
+			<p>
+				Electricity gets always traded as <strong>Watt-Hours + Delivery Timeframe</strong>. 
+			</p>
+		   </div>
+      </div>
+	  <h3>Content</h3>
+	  <div class="row">
+		  <div class="col-md-12" >
+			<p>
+			/ui/<br/>
+			As you see this is a DAPP ... As long as you have MetaMask installed you could run it from every location (eq. IPFS) opening index.html of the UI directory.
+			</p>
+			<p>
+			/contracts/<br/>
+			Contains the actual solidity based contracts.
+			</p>
+			<p>
+			/js/<br/>
+			Is mainly used to kick-start a development environment by providing a deploy.js
+			</p>
+			
+		  </div>
+	   </div>
+	  <hr>
       <footer>
         <p>Read More on <a href="https://github.com/zoernert/powertokenfactory">Github</a></p>
       </footer>

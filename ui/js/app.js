@@ -73,7 +73,7 @@ function schedule(name,value) {
 }
 
 function loadInstance(abi,address,name) {
-	$.getJSON("/build/"+abi+".abi",function(abi_code) {
+	$.getJSON("./build/"+abi+".abi",function(abi_code) {
 			var obj = web3.eth.contract(abi_code).at(address);		
 			ptf.obj[name]=obj;
 			render(name,abi);
@@ -82,7 +82,7 @@ function loadInstance(abi,address,name) {
 }
 
 function loadDeployment() {
-	$.getJSON("/js/current.deployment.json",function(data) {
+	$.getJSON("./js/current.deployment.json",function(data) {
 		ptf.deployment=data;	
 		loadInstance('PowerTokenFactory',data.powertokenfactory,"factory");		
 	});

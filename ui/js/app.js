@@ -13,6 +13,16 @@ function typedLinkBuilder(address,abi) {
 	ptf.links[address]=abi;
 	return "<a href='#' data-abi='"+abi+"' class='typedLink' title='"+address+"' onclick='openTypedLink(\""+address+"\",\""+abi+"\")'>"+abi+" "+address.substr(36)+"</a>";
 }
+function renderTokens(i) {
+	ptf.obj.factory.tokens(i,function(e,r) {
+		if((r!="0x")&&(r!=ptf.null_addr)) {
+			$("#ownerRow").insertAfter("<tr><td></td><td>"+typedLinkBuilder(r,'PowerToken')+"</td></tr>");
+			i++;
+			renderTokens(i);
+		}		
+	});
+	
+}
 function render(name,abi) {
 var html="";
 if(name=="preview") {
@@ -23,17 +33,13 @@ if(name=="preview") {
 html+="<h4>"+ptf.obj[name].address+"</h4>";
 html+="<table class='table'>";
 console.log("ABI:",abi);
-if(abi=="PowerTokenFactory") {
-	html+="<tr><td>Owner</td><td>"+typedLinkBuilder(ptf.obj[name].owner(),'Account')+"</td></tr>";	
+if(abi=="PowerTokenFactory") {	
+	html+="<tr id='ownerRow'><td>Owner</td><td id='owner'></td></tr>";	
 	var i=0;	
-	try {
-	do {
-		if(ptf.obj[name].tokens(i)!=ptf.null_addr) {
-			html+="<tr><td></td><td>"+typedLinkBuilder(ptf.obj[name].tokens(i),'PowerToken')+"</td></tr>";
-		}
-		i++;
-	} while(true) 
-	} catch(e) {}	
+	renderTokens(i);
+	ptf.obj[name].owner(function(e,r) {
+		$('#owner').html(typedLinkBuilder(r,'Account'));
+	});
 }
 if(abi=="PowerToken") {
 	html+="<tr><td>Standard</td><td>"+ptf.obj[name].standard()+"</td></tr>";

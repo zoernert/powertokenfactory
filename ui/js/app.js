@@ -53,7 +53,7 @@ if(abi=="PowerToken") {
 	html+="<tr><td>Delivery End</td><td id='tk_end'></td></tr>";
 	html+="<tr><td>Total Scheduled</td><td id='tk_total'></td></tr>";	
 	html+="<tr><td>Your Schedule</td><td id='tk_balance'></td></tr>";	
-	html+="<tr><td>View Token</td><td><a href='https://ethplorer.io/address/'"+ptf.obj[name].address+"' target=_blank>ETHplorer.io</a>";
+	html+="<tr><td>View Token</td><td><a href='https://ethplorer.io/address/"+ptf.obj[name].address+"' target=_blank>ETHplorer.io</a>";
 	html+="<tr><td>&nbsp;</td><td><button class='btn btn-primary' onclick='schedule("+name+",10)'>Schedule 10</button></td></tr>";
 	console.log(name);
 	html+="</table>";

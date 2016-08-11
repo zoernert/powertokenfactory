@@ -63,13 +63,16 @@ $('#btn_createToken').click(function() {
 	var t = new Date().getTime();
 	t=t/1000;
 	
-	ptf.obj.factory.getTokens(t+300,t+600,{from:web3.eth.accounts[0]});
-	location.reload(false);
+	ptf.obj.factory.getTokens(t+300,t+600,{from:web3.eth.accounts[0]},function(e,r) {
+		location.reload(false);
+	} );
+	
 });
 
 function schedule(name,value) {
-	ptf.obj.preview.planFeedIn(value,{from:web3.eth.accounts[0]});
+	ptf.obj.preview.planFeedIn(value,{from:web3.eth.accounts[0]},function(e,r) {
 	location.reload(false);
+	});
 }
 
 function loadInstance(abi,address,name) {

@@ -75,10 +75,10 @@ if(abi=="PowerToken") {
 		$('#tk_end').html(new Date(r*1000).toLocaleString());
 	});
 	ptf.obj[name].totalsupply(function(e,r) {
-		$('#tk_total').html(r);
+		$('#tk_total').html(r.c[0]);
 	});
 	ptf.obj[name].balanceOf(web3.eth.accounts[0],function(e,r) {
-		$('#tk_balance').html(r);
+		$('#tk_balance').html(r.c[0]);
 	});
 }
 

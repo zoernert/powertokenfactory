@@ -15,8 +15,9 @@ function typedLinkBuilder(address,abi) {
 }
 function renderTokens(i) {
 	ptf.obj.factory.tokens(i,function(e,r) {
+	    console.log(e,r);
 		if((r!="0x")&&(r!=ptf.null_addr)) {
-			$("#ownerRow").insertAfter("<tr><td></td><td>"+typedLinkBuilder(r,'PowerToken')+"</td></tr>");
+			$("<tr><td></td><td>"+typedLinkBuilder(r,'PowerToken')+"</td></tr>").appendTo(".vtab");			
 			i++;
 			renderTokens(i);
 		}		
@@ -31,31 +32,56 @@ if(name=="preview") {
 	html+="<h3>"+name+"</h3>";
 }
 html+="<h4>"+ptf.obj[name].address+"</h4>";
-html+="<table class='table'>";
+html+="<table class='table vtab'>";
 console.log("ABI:",abi);
 if(abi=="PowerTokenFactory") {	
-	html+="<tr id='ownerRow'><td>Owner</td><td id='owner'></td></tr>";	
-	var i=0;	
-	renderTokens(i);
+	html+="<tr id='ownerRow'><td>Owner</td><td id='owner'></td></tr>";		
+	html+="</table>";
+	console.log(html);
+	$('#'+name).html(html);
+	$('#'+name).show();
+	renderTokens(0);
 	ptf.obj[name].owner(function(e,r) {
 		$('#owner').html(typedLinkBuilder(r,'Account'));
 	});
 }
 if(abi=="PowerToken") {
-	html+="<tr><td>Standard</td><td>"+ptf.obj[name].standard()+"</td></tr>";
-	html+="<tr><td>Name</td><td>"+ptf.obj[name].name()+"</td></tr>";
-	html+="<tr><td>Symbol</td><td>"+ptf.obj[name].symbol()+"</td></tr>";
-	html+="<tr><td>Delivery Start</td><td>"+new Date(ptf.obj[name].delivery_start()*1000).toLocaleString()+"</td></tr>";
-	html+="<tr><td>Delivery End</td><td>"+new Date(ptf.obj[name].delivery_end()*1000).toLocaleString()+"</td></tr>";
-	html+="<tr><td>Total Scheduled</td><td>"+ptf.obj[name].totalsupply()+"</td></tr>";	
-	html+="<tr><td>Your Schedule</td><td>"+ptf.obj[name].balanceOf(web3.eth.accounts[0])+"</td></tr>";	
+	html+="<tr><td>Standard</td><td id='tk_standard'></td></tr>";
+	html+="<tr><td>Name</td><td id='tk_name'></td></tr>";
+	html+="<tr><td>Symbol</td><td id='tk_symbol'></td></tr>";
+	html+="<tr><td>Delivery Start</td><td id='tk_start'></td></tr>";
+	html+="<tr><td>Delivery End</td><td id='tk_end'></td></tr>";
+	html+="<tr><td>Total Scheduled</td><td id='tk_total'></td></tr>";	
+	html+="<tr><td>Your Schedule</td><td id='tk_balance'></td></tr>";	
 	html+="<tr><td>View Token</td><td><a href='https://ethplorer.io/address/'"+ptf.obj[name].address+"' target=_blank>ETHplorer.io</a>";
 	html+="<tr><td>&nbsp;</td><td><button class='btn btn-primary' onclick='schedule("+name+",10)'>Schedule 10</button></td></tr>";
 	console.log(name);
+	html+="</table>";
+	$('#'+name).html(html);
+	$('#'+name).show();
+	ptf.obj[name].standard(function(e,r) {
+		$('#tk_standard').html(r);
+	});
+	ptf.obj[name].name(function(e,r) {
+		$('#tk_name').html(r);
+	});
+	ptf.obj[name].symbol(function(e,r) {
+		$('#tk_symbol').html(r);
+	});
+	ptf.obj[name].delivery_start(function(e,r) {
+		$('#tk_start').html(new Date(r*1000).toLocaleString());
+	});
+	ptf.obj[name].delivery_end(function(e,r) {
+		$('#tk_end').html(new Date(r*1000).toLocaleString());
+	});
+	ptf.obj[name].totalsupply(function(e,r) {
+		$('#tk_total').html(r);
+	});
+	ptf.obj[name].balanceOf(web3.eth.accounts[0],function(e,r) {
+		$('#tk_balance').html(r);
+	});
 }
-html+="</table>";
-$('#'+name).html(html);
-$('#'+name).show();
+
 }
 
 
@@ -63,14 +89,14 @@ $('#btn_createToken').click(function() {
 	var t = new Date().getTime();
 	t=t/1000;
 	
-	ptf.obj.factory.getTokens(t+300,t+600,{from:web3.eth.accounts[0]},function(e,r) {
+	ptf.obj.factory.getTokens(t+300,t+600,{from:web3.eth.accounts[0],gas: 1000000},function(e,r) {
 		location.reload(false);
 	} );
 	
 });
 
 function schedule(name,value) {
-	ptf.obj.preview.planFeedIn(value,{from:web3.eth.accounts[0]},function(e,r) {
+	ptf.obj.preview.planFeedIn(value,{from:web3.eth.accounts[0],gas: 1000000},function(e,r) {
 	location.reload(false);
 	});
 }

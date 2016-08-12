@@ -74,7 +74,7 @@ if(abi=="PowerToken") {
 	ptf.obj[name].delivery_end(function(e,r) {
 		$('#tk_end').html(new Date(r*1000).toLocaleString());
 	});
-	ptf.obj[name].totalsupply(function(e,r) {
+	ptf.obj[name].totalSupply(function(e,r) {
 		$('#tk_total').html(r.c[0]);
 	});
 	ptf.obj[name].balanceOf(web3.eth.accounts[0],function(e,r) {

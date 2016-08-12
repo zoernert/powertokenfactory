@@ -31,7 +31,7 @@ contract PowerToken {
 	// Freeze an address 
 	event FrozenFunds(address target, bool frozen);
 	
-	uint256 public totalsupply;
+	uint256 public totalSupply;
 	
 	mapping (address => uint256) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
@@ -79,9 +79,9 @@ contract PowerToken {
 	
 	function planFeedIn(uint256 _value) {
 		if (balanceOf[msg.sender] + _value < balanceOf[msg.sender]) throw;   // Check for overflows
-		if(totalsupply+_value<totalsupply) throw;
+		if(totalSupply+_value<totalSupply) throw;
 		balanceOf[msg.sender]+=_value;
-		totalsupply += _value;
+		totalSupply += _value;
 		//Transfer(0, msg.sender, _value);
 		Transfer(issuer, msg.sender, _value);		
 	}
